@@ -1,0 +1,31 @@
+data:
+  raw_path: "data/raw/Telco-Customer-Churn.csv"
+  index_col: "customerID"
+  target_col: "Churn"
+
+feature_selection:
+  top_n_categorical: 7
+  correlation_threshold: 0.1
+
+split:
+  test_size: 0.2
+  random_state: 42
+
+models:
+  logistic_regression:
+    max_iter: 1000
+    solver: "liblinear"
+  xgboost:
+    n_estimators: 200
+    max_depth: 4
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    random_state: 42
+    eval_metric: "logloss"
+
+artifacts:
+  model_dir: "models"
+  xgboost_filename: "xgb_churn_model.joblib"
+  logistic_filename: "logistic_churn_model.joblib"
+  feature_metadata_filename: "selected_features.joblib"
