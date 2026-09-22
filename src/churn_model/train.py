@@ -38,7 +38,8 @@ def run(config_path: str) -> None:
 
     logger.info("Loading raw data from %s", cfg["data"]["raw_path"])
     df = load_raw_data(cfg["data"]["raw_path"], cfg["data"]["index_col"])
-    df = clean_data(df)
+    df, total_charges_median = clean_data(df)
+    logger.info("TotalCharges training median (persisted for inference): %.2f", total_charges_median)
 
     logger.info("Selecting features (chi-square + correlation) — training-time only")
     selected = select_features(
@@ -47,6 +48,7 @@ def run(config_path: str) -> None:
         top_n_categorical=cfg["feature_selection"]["top_n_categorical"],
         correlation_threshold=cfg["feature_selection"]["correlation_threshold"],
     )
+    selected.total_charges_median = total_charges_median
     logger.info("Selected categorical: %s", selected.categorical)
     logger.info("Selected numerical: %s", selected.numerical)
 
