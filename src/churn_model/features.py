@@ -1,5 +1,6 @@
 """Feature selection and encoding.
-(chi-square test, correlation test, feature
+
+ (chi-square test, correlation test, feature
 selection, one-hot encoding).
 
 Two functions, two different lifecycles - this split is the whole point:
@@ -32,6 +33,7 @@ class SelectedFeatures:
     categorical: list[str]
     numerical: list[str]
     encoded_columns: list[str] = field(default_factory=list)
+    total_charges_median: float = 0.0
 
 
 def select_features(
