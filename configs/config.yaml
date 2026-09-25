@@ -29,3 +29,8 @@ artifacts:
   xgboost_filename: "xgb_churn_model.joblib"
   logistic_filename: "logistic_churn_model.joblib"
   feature_metadata_filename: "selected_features.joblib"
+
+  mlflow:
+  tracking_uri: "sqlite:///mlflow.db"
+  registered_model_name: "churn_xgboost"
+  champion_alias: "champion"
