@@ -1,0 +1,32 @@
+{
+  "name": "churn-model-dev",
+
+  // Base image: an official Microsoft-maintained Python 3.11 environment.
+  // This replaces manually installing Python on Windows - the container
+  // already has it, matching the interpreter version you've been using.
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+
+  // Runs ONCE, automatically, right after the container is built -
+  // this is what replaces you manually typing venv creation + pip
+  // install every time. It happens for you, the same way, every time.
+  "postCreateCommand": "python -m venv venv && . venv/bin/activate && pip install -r requirements.txt && pip install -e .",
+
+  // Codespaces auto-detects when a process inside the container starts
+  // listening on one of these ports, and offers to open it in your
+  // browser with a public-ish forwarded URL - this is how you'll reach
+  // FastAPI, Gradio, and the MLflow UI from outside the container.
+  "forwardPorts": [8000, 7860, 5000],
+  "portsAttributes": {
+    "8000": { "label": "FastAPI", "onAutoForward": "notify" },
+    "7860": { "label": "Gradio", "onAutoForward": "openBrowser" },
+    "5000": { "label": "MLflow UI", "onAutoForward": "notify" }
+  },
+
+  // Pre-installs the same VS Code extensions you'd want locally, so the
+  // browser/remote VS Code experience isn't missing anything.
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-python.python", "ms-toolsai.jupyter"]
+    }
+  }
+}
